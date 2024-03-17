@@ -1,7 +1,9 @@
 import { App } from './http/app';
-
-const PORT = Number(process.env.PORT) || 3333;
+import { AppDataSource } from './database';
 
 const app = new App();
 
-app.listen(PORT);
+AppDataSource.initialize().then(() => {
+  app.listen(Number(process.env.PORT || 3030),
+    `Server started on PORT: ${process.env.PORT || 3030}!`);
+});

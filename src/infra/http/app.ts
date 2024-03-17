@@ -34,7 +34,9 @@ export class App {
     );
   }
 
-  public listen(port: Number): void {
-    this.app.listen(port || 3333);
+  public listen(port: Number, message: string): void {
+    this.app.listen(port || 3030);
+
+    console.log(message);
   }
 }
