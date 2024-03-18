@@ -1,4 +1,6 @@
 import { DataSource } from 'typeorm';
+import { UserModel } from '../../application/user/typeorm/user.model';
+import { CreateTableUsers1710716579865 } from './migrations/1710716579865-CreateTableUsers';
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
@@ -7,8 +9,6 @@ export const AppDataSource = new DataSource({
   username: 'postgres',
   password: 'postgres',
   database: 'registerDB',
-  synchronize: true,
-  logging: true,
-  entities: [],
-  migrations: ['src/infra/database/migrations'],
+  entities: [UserModel],
+  migrations: [CreateTableUsers1710716579865],
 });
