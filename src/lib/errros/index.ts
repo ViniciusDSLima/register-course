@@ -156,6 +156,20 @@ class InternalServerError extends Error {
   }
 }
 
+export class DomainError extends Error {
+  public type: string;
+  public status: number;
+
+  constructor(message: string) {
+    super(message);
+
+    this.name = 'DomainError';
+    this.type = 'DOMAIN_ERROR';
+    this.status = 400;
+  }
+}
+
+
 class UploadError extends Error {
   public type: string;
 
