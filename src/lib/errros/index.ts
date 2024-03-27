@@ -175,12 +175,10 @@ class InternalServerError extends Error {
 export class DomainError extends Error {
   public type: string;
   public status: number;
-  public messageTranslated: string;
 
-  constructor(message: string, messageTranslated: string) {
+  constructor(message: string) {
     super(message);
 
-    this.messageTranslated = messageTranslated;
     this.name = 'DomainError';
     this.type = 'DOMAIN_ERROR';
     this.status = 400;
