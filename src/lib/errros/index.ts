@@ -14,10 +14,12 @@ interface IError extends Error {
 class NotFoundError extends Error {
   public type: string;
   public status: number;
+  public messageTranslated: string;
 
-  constructor(message: string) {
+  constructor(message: string, messageTranslated: string) {
     super(message);
 
+    this.messageTranslated = messageTranslated;
     this.name = 'NotFoundError';
     this.type = 'NOT_FOUND';
     this.status = 404;
@@ -27,10 +29,12 @@ class NotFoundError extends Error {
 class BadRequestError extends Error {
   public type: string;
   public status: number;
+  public messageTranslated: string;
 
-  constructor(message: string) {
+  constructor(message: string, messageTranslated: string) {
     super(message);
 
+    this.messageTranslated = messageTranslated;
     this.name = 'BadRequestError';
     this.type = 'BAD_REQUEST';
     this.status = 400;
@@ -40,10 +44,12 @@ class BadRequestError extends Error {
 class ResourceNotFoundError extends Error {
   public type: string;
   public status: number;
+  public messageTranslated: string;
 
-  constructor(message: string) {
+  constructor(message: string, messageTranslated: string) {
     super(message);
 
+    this.messageTranslated = messageTranslated;
     this.name = 'NotFoundError';
     this.type = 'RESOURCE_NOT_FOUND';
     this.status = 404;
@@ -79,10 +85,12 @@ class ValidationError extends Error {
 class AuthorizationError extends Error {
   public type: string;
   public status: number;
+  public messageTranslated: string;
 
-  constructor() {
-    super('Requires authentication');
+  constructor(message: string, messageTranslated: string) {
+    super(message);
 
+    this.messageTranslated = messageTranslated;
     this.name = 'AuthorizationError';
     this.type = 'UNAUTHORIZED';
     this.status = 401;
@@ -92,10 +100,12 @@ class AuthorizationError extends Error {
 class AuthenticateError extends Error {
   public type: string;
   public status: number;
+  public messageTranslated: string;
 
-  constructor(message: string) {
+  constructor(message: string, messageTranslated: string) {
     super(message);
 
+    this.messageTranslated = messageTranslated;
     this.name = 'AuthenticateError';
     this.type = 'INVALID_CREDENTIAL';
     this.status = 401;
@@ -105,10 +115,12 @@ class AuthenticateError extends Error {
 class AccessDeniedError extends Error {
   public type: string;
   public status: number;
+  public messageTranslated: string;
 
-  constructor(message: string) {
+  constructor(message: string, messageTranslated: string) {
     super(message);
 
+    this.messageTranslated = messageTranslated;
     this.name = 'AuthenticateError';
     this.type = 'ACCESS_DENIED';
     this.status = 401;
@@ -118,10 +130,12 @@ class AccessDeniedError extends Error {
 class InvalidTokenError extends Error {
   public type: string;
   public status: number;
+  public messageTranslated: string;
 
-  constructor(message: string) {
+  constructor(message: string, messageTranslated: string) {
     super(message);
 
+    this.messageTranslated = messageTranslated;
     this.name = 'InvalidTokenError';
     this.type = 'INVALID_TOKEN';
     this.status = 401;
@@ -131,10 +145,12 @@ class InvalidTokenError extends Error {
 class WithoutPermissionError extends Error {
   public type: string;
   public status: number;
+  public messageTranslated: string;
 
-  constructor(message: string) {
+  constructor(message: string, messageTranslated: string) {
     super(message);
 
+    this.messageTranslated = messageTranslated;
     this.name = 'WithoutPermissionError';
     this.type = 'WITHOUT_PERMISSION';
     this.status = 401;
@@ -159,10 +175,12 @@ class InternalServerError extends Error {
 export class DomainError extends Error {
   public type: string;
   public status: number;
+  public messageTranslated: string;
 
-  constructor(message: string) {
+  constructor(message: string, messageTranslated: string) {
     super(message);
 
+    this.messageTranslated = messageTranslated;
     this.name = 'DomainError';
     this.type = 'DOMAIN_ERROR';
     this.status = 400;
@@ -172,10 +190,12 @@ export class DomainError extends Error {
 
 class UploadError extends Error {
   public type: string;
+  public messageTranslated: string;
 
-  constructor(message: string) {
+  constructor(message: string, messageTranslated: string) {
     super(message);
 
+    this.messageTranslated = messageTranslated;
     this.name = 'UploadError';
     this.type = 'UPLOAD_ERROR';
   }
