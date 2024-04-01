@@ -5,6 +5,7 @@ export type UserFactoryRequestType = {
   name: string;
   email: string;
   password: string;
+  resetPassword: boolean,
   created_at?: Date;
   updated_at?: Date;
 }
@@ -18,6 +19,7 @@ export class UserFactory {
       name: data.name,
       email: data.email,
       password: data.password,
+      resetPassword: false,
       created_at: data.created_at ?? new Date(),
       updated_at: data.updated_at ?? new Date(),
     });
