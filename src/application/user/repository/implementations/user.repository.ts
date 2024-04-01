@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { UserModel } from '../../typeorm/user.model';
 import { AppDataSource } from '../../../../infra/database';
 import { InternalServerError } from '../../../../lib/errros';
+import { UserMap } from '../../../../main/map/user.map';
 
 export class UserRepository implements UserRepositoryInterface {
   private ormRepository: Repository<UserModel>;
@@ -14,11 +15,12 @@ export class UserRepository implements UserRepositoryInterface {
 
   public async create(entity: UserEntity): Promise<UserEntity> {
     try {
-
       const userModelRepostoryResponse = this.ormRepository.create({
-        id: entity.Id,
-        name: entity.Name,
-        email: entity.Email,
+        id: entity.id,
+        name: entity.name,
+        email: entity.email,
+        password: entity.password,
+        resetPassword: false,
       });
 
       await this.ormRepository.save(userModelRepostoryResponse);
@@ -31,4 +33,17 @@ export class UserRepository implements UserRepositoryInterface {
     }
   }
 
+  public async getUser(email: string): Promise<UserEntity | undefined> {
+    const userCreated = await this.ormRepository.findOne({
+      where: {
+        email,
+      },
+    });
+
+    if (userCreated === null) {
+      return undefined;
+    }
+
+    return UserMap.TypeormToDomain(userCreated);
+  }
 }
