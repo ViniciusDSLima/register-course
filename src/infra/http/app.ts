@@ -1,6 +1,7 @@
 import express, { Express } from 'express';
 import cors from 'cors';
 import { errors } from 'celebrate';
+import { routes } from './api/routes';
 
 export class App {
   private app: Express;
@@ -11,6 +12,12 @@ export class App {
     this.config();
     this.routes();
     this.handleParserErros();
+  }
+
+  public listen(port: Number, message: string): void {
+    this.app.listen(port || 3030);
+
+    console.log(message);
   }
 
   private config(): void {
@@ -24,6 +31,7 @@ export class App {
   };
 
   private routes(): void {
+    this.app.use(routes);
   }
 
   private handleParserErros(): void {
@@ -32,11 +40,5 @@ export class App {
         statusCode: 422,
       }),
     );
-  }
-
-  public listen(port: Number, message: string): void {
-    this.app.listen(port || 3030);
-
-    console.log(message);
   }
 }
