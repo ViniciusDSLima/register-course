@@ -1,6 +1,6 @@
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
-@Entity('users')
+@Entity('Users')
 export class UserModel {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -13,6 +13,9 @@ export class UserModel {
 
   @Column()
   password: string;
+
+  @Column({ type: 'boolean' })
+  resetPassword: boolean;
 
   @CreateDateColumn()
   created_at: Date;
