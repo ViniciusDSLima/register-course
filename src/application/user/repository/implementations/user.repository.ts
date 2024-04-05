@@ -1,12 +1,12 @@
 import { UserEntity } from '../../../../domain/entity/user.entity';
-import { UserRepositoryInterface } from '../interfaces/user.repository.interface';
+import { UserRepositoryType } from '../interfaces/userRepositoryType';
 import { Repository } from 'typeorm';
 import { UserModel } from '../../typeorm/user.model';
 import { AppDataSource } from '../../../../infra/database';
 import { InternalServerError } from '../../../../lib/errros';
 import { UserMap } from '../../../../main/map/user.map';
 
-export class UserRepository implements UserRepositoryInterface {
+export class UserRepository implements UserRepositoryType {
   private ormRepository: Repository<UserModel>;
 
   constructor() {
@@ -33,11 +33,9 @@ export class UserRepository implements UserRepositoryInterface {
     }
   }
 
-  public async getUser(email: string): Promise<UserEntity | undefined> {
-    const userCreated = await this.ormRepository.findOne({
-      where: {
-        email,
-      },
+  public async getUserByEmail(email: string): Promise<UserEntity | undefined> {
+    const userCreated = await this.ormRepository.findOneByOrFail({
+      email,
     });
 
     if (userCreated === null) {
@@ -45,5 +43,27 @@ export class UserRepository implements UserRepositoryInterface {
     }
 
     return UserMap.TypeormToDomain(userCreated);
+  }
+
+  public async getById(id: string): Promise<UserEntity | undefined> {
+    const user = await this.ormRepository.findOneOrFail({
+      where: {
+        id,
+      },
+    });
+
+    return UserMap.TypeormToDomain(user);
+  }
+
+  public async update(entity: UserEntity): Promise<undefined> {
+    await this.ormRepository.save({
+      id: entity.id,
+      name: entity.name,
+      email: entity.email,
+      password: entity.password,
+      resetPassword: entity.resetPassword,
+    });
+
+    return undefined;
   }
 }

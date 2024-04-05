@@ -1,5 +1,5 @@
 import { DomainError } from '../../lib/errros';
-import { hashSync } from 'bcrypt';
+import * as bcrypt from 'bcrypt';
 
 export type UserRequestType = {
   id: string;
@@ -22,6 +22,12 @@ export type UserResponseType = {
 }
 
 export class UserEntity {
+  private readonly _id: string;
+  private readonly _name: string;
+  private readonly _email: string;
+  private readonly _created_at: Date;
+  private readonly _updated_at: Date;
+
   constructor(data: UserRequestType) {
     this._id = data.id;
     this._name = data.name;
@@ -34,28 +40,16 @@ export class UserEntity {
     this.validate();
   }
 
-  private _id: string;
-
   get id(): string {
     return this._id;
   }
-
-  private _name: string;
 
   get name(): string {
     return this._name;
   }
 
-  private _email: string;
-
   get email(): string {
     return this._email;
-  }
-
-  private _password: string;
-
-  get password(): string {
-    return this._password;
   }
 
   private _resetPassword: boolean;
@@ -64,20 +58,35 @@ export class UserEntity {
     return this._resetPassword;
   }
 
-  private _created_at: Date;
-
   get created_at(): Date {
     return this._created_at;
   }
-
-  private _updated_at: Date;
 
   get updated_at(): Date {
     return this._updated_at;
   }
 
+  private _password: string;
+
+  get password(): string {
+    return this._password;
+  }
+
   public hashPassword(): void {
-    this._password = hashSync(this._password, 8);
+    this._password = bcrypt.hashSync(this._password, 8);
+  }
+
+  public checkIfUnencryptedPasswordIsValid(unencryptedPassWord: string) {
+    return bcrypt.compareSync(unencryptedPassWord, this._password);
+  }
+
+  public changePassword(newPassword: string): void {
+    this._password = newPassword;
+    this.hashPassword();
+  }
+
+  public changeResetPassword(): void {
+    this._resetPassword = true;
   }
 
   private validate() {

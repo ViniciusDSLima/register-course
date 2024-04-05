@@ -93,7 +93,7 @@ class AuthorizationError extends Error {
     this.messageTranslated = messageTranslated;
     this.name = 'AuthorizationError';
     this.type = 'UNAUTHORIZED';
-    this.status = 401;
+    this.status = 403;
   }
 }
 

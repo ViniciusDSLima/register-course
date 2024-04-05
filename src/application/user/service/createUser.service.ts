@@ -1,4 +1,4 @@
-import { UserRepositoryInterface } from '../repository/interfaces/user.repository.interface';
+import { UserRepositoryType } from '../repository/interfaces/userRepositoryType';
 import { UserResponseType } from '../../../domain/entity/user.entity';
 import { UserMap } from '../../../main/map/user.map';
 import { userRegisterRequestType } from '../controller/createUser.controller';
@@ -7,11 +7,11 @@ import { generateUniqueId } from '../../../infra/utils/generateUniqueId';
 import { AlreadyExist } from '../../../lib/errros';
 
 export class CreateUserService {
-  constructor(private _userRepository: UserRepositoryInterface) {
+  constructor(private _userRepository: UserRepositoryType) {
   }
 
   public async execute(data: userRegisterRequestType): Promise<UserResponseType> {
-    const getUserRepositoryResponse = await this._userRepository.getUser(data.email);
+    const getUserRepositoryResponse = await this._userRepository.getUserByEmail(data.email);
 
     if (getUserRepositoryResponse) {
       throw new AlreadyExist('User already exists',
