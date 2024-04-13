@@ -7,8 +7,8 @@ import { AuthenticationRequestType } from '../controller/Authentication.controll
 
 
 type AuthenticationResponseType = {
-  token: string;
   user: UserResponseType
+  token: string;
 }
 
 export class AuthenticationService {
@@ -35,7 +35,7 @@ export class AuthenticationService {
     const user = UserMap.DomainToResponse(userRepositoryResponse);
 
     return {
-      token, user,
+      user, token,
     };
   }
 }

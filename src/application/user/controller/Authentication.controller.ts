@@ -13,9 +13,11 @@ export type AuthenticationRequestType = {
 
 export class AuthenticationController implements WebControllerType {
   public async handle(request: Request): Promise<HttpResponseType> {
-    const { data } = request.body as AuthenticationRequestType;
+    const { email, password } = request.body as AuthenticationRequestType;
 
-    const authenticationResponseService = await new AuthenticationService(new UserRepository()).execute(data);
+    const authenticationResponseService = await new AuthenticationService(new UserRepository()).execute({
+      email, password,
+    });
 
     return HttpResponse.ok(authenticationResponseService);
   }

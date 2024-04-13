@@ -1,5 +1,5 @@
 import { UserRepositoryType } from '../repository/interfaces/userRepositoryType';
-import { AuthenticateError, NotFoundError } from '../../../lib/errros';
+import { AuthenticateError, BadRequestError, NotFoundError } from '../../../lib/errros';
 import { ChangePasswordRequestType } from '../controller/changeUserPassword.controller';
 
 
@@ -14,6 +14,11 @@ export class ChangeUserPasswordService {
     if (!user) {
       throw new NotFoundError('User not found',
         'Usuario nao encontrado na base de dados.');
+    }
+
+    if (data.oldPassword === data.newPassword) {
+      throw new BadRequestError('both Password is Equals',
+        'Senha ja cadastrada.');
     }
 
     if (!user.checkIfUnencryptedPasswordIsValid(data.oldPassword)) {

@@ -34,8 +34,10 @@ export class UserRepository implements UserRepositoryType {
   }
 
   public async getUserByEmail(email: string): Promise<UserEntity | undefined> {
-    const userCreated = await this.ormRepository.findOneByOrFail({
-      email,
+    const userCreated = await this.ormRepository.findOne({
+      where: {
+        email,
+      },
     });
 
     if (userCreated === null) {

@@ -2,8 +2,12 @@ import express, { Express } from 'express';
 import cors from 'cors';
 import { errors } from 'celebrate';
 import { routes } from './api/routes';
+import { configDotenv } from 'dotenv';
+
+configDotenv();
 
 export class App {
+
   private app: Express;
 
   constructor() {
@@ -15,7 +19,7 @@ export class App {
   }
 
   public listen(port: Number, message: string): void {
-    this.app.listen(port || 3030);
+    this.app.listen(port || 5000);
 
     console.log(message);
   }
